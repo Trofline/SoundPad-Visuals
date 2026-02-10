@@ -54,11 +54,8 @@ namespace SoundPad_Visuals
             var source = HwndSource.FromHwnd(hwnd);
             source.AddHook(HwndHook);
 
-            // Hotkeys registrieren: 0–9 oben auf der Tastatur
-            for (int i = 0; i <= 9; i++)
-            {
-                RegisterHotKey(hwnd, i, MOD_NONE, (uint)(0x30 + i)); // D0-D9
-            }
+     
+            
             // Hotkeys registrieren: NumPad0–9
             for (int i = 0; i <= 9; i++)
             {
