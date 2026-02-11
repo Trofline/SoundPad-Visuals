@@ -110,44 +110,44 @@
                 </Grid.RowDefinitions>
 
                 <!-- Sound 1 -->
-                <TextBox x:Name="s1" Grid.Row="0" Grid.Column="0" Margin="10,15,0,2.5" Background="Transparent" BorderThickness="0" Foreground="White" Text="Sound 1" IsReadOnly="True"/>
-                <TextBox x:Name="h1" Grid.Row="0" Grid.Column="1" Margin="0,15,0,2.5" Background="Transparent" BorderThickness="0" Foreground="White" Text="F1" TextAlignment="Center"/>
+                <TextBox x:Name="s1" Grid.Row="0" Grid.Column="0" Margin="10,15,0,2.5" Background="Transparent" BorderThickness="0" Foreground="White" IsReadOnly="True"/>
+                <TextBox x:Name="h1" Grid.Row="0" Grid.Column="1" Margin="0,15,0,2.5" Background="Transparent" BorderThickness="0" Foreground="White" TextAlignment="Center"/>
 
                 <!-- Sound 2 -->
-                <TextBox x:Name="s2" Grid.Row="1" Grid.Column="0" Margin="10,5,0,2.5" Background="Transparent" BorderThickness="0" Foreground="White" Text="Sound 2" IsReadOnly="True"/>
-                <TextBox x:Name="h2" TextAlignment="Center" Grid.Row="1" Grid.Column="1" Margin="0,5,0,2.5" Background="Transparent" BorderThickness="0" Foreground="White" Text="F2"/>
+                <TextBox x:Name="s2" Grid.Row="1" Grid.Column="0" Margin="10,5,0,2.5" Background="Transparent" BorderThickness="0" Foreground="White" IsReadOnly="True"/>
+                <TextBox x:Name="h2" TextAlignment="Center" Grid.Row="1" Grid.Column="1" Margin="0,5,0,2.5" Background="Transparent" BorderThickness="0" Foreground="White"/>
 
                 <!-- Sound 3 -->
-                <TextBox x:Name="s3" Grid.Row="2" Grid.Column="0" Margin="10,5,0,2.5" Background="Transparent" BorderThickness="0" Foreground="White" Text="Sound 3" IsReadOnly="True"/>
-                <TextBox x:Name="h3"  TextAlignment="Center" Grid.Row="2" Grid.Column="1" Margin="0,5,0,2.5" Background="Transparent" BorderThickness="0" Foreground="White" Text="F3"/>
+                <TextBox x:Name="s3" Grid.Row="2" Grid.Column="0" Margin="10,5,0,2.5" Background="Transparent" BorderThickness="0" Foreground="White" IsReadOnly="True"/>
+                <TextBox x:Name="h3"  TextAlignment="Center" Grid.Row="2" Grid.Column="1" Margin="0,5,0,2.5" Background="Transparent" BorderThickness="0" Foreground="White"/>
 
                 <!-- Sound 4 -->
-                <TextBox x:Name="s4" Grid.Row="3" Grid.Column="0" Margin="10,5,0,2.5" Background="Transparent" BorderThickness="0" Foreground="White" Text="Sound 4" IsReadOnly="True"/>
-                <TextBox x:Name="h4" TextAlignment="Center" Grid.Row="3" Grid.Column="1" Margin="0,5,0,2.5" Background="Transparent" BorderThickness="0" Foreground="White" Text="F4"/>
+                <TextBox x:Name="s4" Grid.Row="3" Grid.Column="0" Margin="10,5,0,2.5" Background="Transparent" BorderThickness="0" Foreground="White" IsReadOnly="True"/>
+                <TextBox x:Name="h4" TextAlignment="Center" Grid.Row="3" Grid.Column="1" Margin="0,5,0,2.5" Background="Transparent" BorderThickness="0" Foreground="White"/>
 
                 <!-- Sound 5 -->
-                <TextBox x:Name="s5" Grid.Row="4" Grid.Column="0" Margin="10,5,0,2.5" Background="Transparent" BorderThickness="0" Foreground="White" Text="Sound 5" IsReadOnly="True"/>
-                <TextBox x:Name="h5" TextAlignment="Center" Grid.Row="4" Grid.Column="1" Margin="0,5,0,2.5" Background="Transparent" BorderThickness="0" Foreground="White" Text="F5"/>
+                <TextBox x:Name="s5" Grid.Row="4" Grid.Column="0" Margin="10,5,0,2.5" Background="Transparent" BorderThickness="0" Foreground="White" IsReadOnly="True"/>
+                <TextBox x:Name="h5" TextAlignment="Center" Grid.Row="4" Grid.Column="1" Margin="0,5,0,2.5" Background="Transparent" BorderThickness="0" Foreground="White"/>
 
                 <!-- Sound 6 -->
-                <TextBox x:Name="s6" Grid.Row="5" Grid.Column="0" Margin="10,5,0,2.5" Background="Transparent" BorderThickness="0" Foreground="White" Text="Sound 6" IsReadOnly="True"/>
-                <TextBox x:Name="h6" TextAlignment="Center" Grid.Row="5" Grid.Column="1" Margin="0,5,0,2.5" Background="Transparent" BorderThickness="0" Foreground="White" Text="F6"/>
+                <TextBox x:Name="s6" Grid.Row="5" Grid.Column="0" Margin="10,5,0,2.5" Background="Transparent" BorderThickness="0" Foreground="White" IsReadOnly="True"/>
+                <TextBox x:Name="h6" TextAlignment="Center" Grid.Row="5" Grid.Column="1" Margin="0,5,0,2.5" Background="Transparent" BorderThickness="0" Foreground="White"/>
 
                 <!-- Sound 7 -->
-                <TextBox x:Name="s7" Grid.Row="6" Grid.Column="0" Margin="10,5,0,2.5" Background="Transparent" BorderThickness="0" Foreground="White" Text="Sound 7" IsReadOnly="True"/>
-                <TextBox x:Name="h7" TextAlignment="Center" Grid.Row="6" Grid.Column="1" Margin="0,5,0,2.5" Background="Transparent" BorderThickness="0" Foreground="White" Text="F7"/>
+                <TextBox x:Name="s7" Grid.Row="6" Grid.Column="0" Margin="10,5,0,2.5" Background="Transparent" BorderThickness="0" Foreground="White" IsReadOnly="True"/>
+                <TextBox x:Name="h7" TextAlignment="Center" Grid.Row="6" Grid.Column="1" Margin="0,5,0,2.5" Background="Transparent" BorderThickness="0" Foreground="White"/>
 
                 <!-- Sound 8 -->
-                <TextBox x:Name="s8" Grid.Row="7" Grid.Column="0" Margin="10,5,0,2.5" Background="Transparent" BorderThickness="0" Foreground="White" Text="Sound 8" IsReadOnly="True"/>
-                <TextBox x:Name="h8" TextAlignment="Center" Grid.Row="7" Grid.Column="1" Margin="0,5,0,2.5" Background="Transparent" BorderThickness="0" Foreground="White" Text="F8"/>
+                <TextBox x:Name="s8" Grid.Row="7" Grid.Column="0" Margin="10,5,0,2.5" Background="Transparent" BorderThickness="0" Foreground="White" IsReadOnly="True"/>
+                <TextBox x:Name="h8" TextAlignment="Center" Grid.Row="7" Grid.Column="1" Margin="0,5,0,2.5" Background="Transparent" BorderThickness="0" Foreground="White"/>
 
                 <!-- Sound 9 -->
-                <TextBox x:Name="s9" Grid.Row="8" Grid.Column="0" Margin="10,5,0,2.5" Background="Transparent" BorderThickness="0" Foreground="White" Text="Sound 9" IsReadOnly="True"/>
-                <TextBox x:Name="h9" TextAlignment="Center" Grid.Row="8" Grid.Column="1" Margin="0,5,0,2.5" Background="Transparent" BorderThickness="0" Foreground="White" Text="F9"/>
+                <TextBox x:Name="s9" Grid.Row="8" Grid.Column="0" Margin="10,5,0,2.5" Background="Transparent" BorderThickness="0" Foreground="White" IsReadOnly="True"/>
+                <TextBox x:Name="h9" TextAlignment="Center" Grid.Row="8" Grid.Column="1" Margin="0,5,0,2.5" Background="Transparent" BorderThickness="0" Foreground="White"/>
 
                 <!-- Sound 10 -->
-                <TextBox x:Name="s10" Grid.Row="9" Grid.Column="0" Margin="10,5,0,2.5" Background="Transparent" BorderThickness="0" Foreground="White" Text="Sound 10" IsReadOnly="True"/>
-                <TextBox x:Name="h10" TextAlignment="Center" Grid.Row="9" Grid.Column="1" Margin="0,5,0,2.5" Background="Transparent" BorderThickness="0" Foreground="White" Text="F10"/>
+                <TextBox x:Name="s10" Grid.Row="9" Grid.Column="0" Margin="10,5,0,2.5" Background="Transparent" BorderThickness="0" Foreground="White" IsReadOnly="True"/>
+                <TextBox x:Name="h10" TextAlignment="Center" Grid.Row="9" Grid.Column="1" Margin="0,5,0,2.5" Background="Transparent" BorderThickness="0" Foreground="White"/>
             </Grid>
 
             <!-- ending -->

@@ -140,7 +140,8 @@ namespace SoundPad_Visuals
 
             if (!File.Exists(filePath))
             {
-                MessageBox.Show("Keine Soundliste gefunden. Bitte zuerst im Settings-Fenster scannen.", "Info", MessageBoxButton.OK, MessageBoxImage.Information);
+                MessageBox.Show("No sounds found. Please select the folder and scan the files\nYou should open the readme in the settings tab, if you are new", "Info", MessageBoxButton.OK, MessageBoxImage.Information);
+                
                 return;
             }
 
@@ -154,10 +155,14 @@ namespace SoundPad_Visuals
 
             CurrentPage = num;
 
+            
+
+
+
             // Hotkeys der aktuellen Page laden oder Standard setzen
             if (!PageHotkeys.ContainsKey(num))
             {
-                string[] defaults = Enumerable.Range(1, 10).Select(i => $"F{i}").ToArray();
+                string[] defaults = Enumerable.Range(1, 10).Select(i => $"{(i+(CurrentPage - 1)*10)}").ToArray();
                 PageHotkeys[num] = defaults;
             }
 
@@ -192,7 +197,7 @@ namespace SoundPad_Visuals
             }
             for (int i = sounds.Count; i < 10; i++)
             {
-                soundBoxes[i].Text = $"Sound {i + 1}";
+                soundBoxes[i].Text = "";
             }
         }
 
@@ -301,18 +306,9 @@ namespace SoundPad_Visuals
 
         private void Settings_Click(object sender, RoutedEventArgs e)
         {
-            if (Settings == null)
-            {
-                Settings = new SettingsWindow();
-                Settings.Closed += (s, args) => { Settings = null; };
-                Settings.Owner = this;
-                Settings.ShowDialog();
-            }
-            else
-            {
-                Settings.ShowDialog();
-            }
+            var settingsWindow = new SettingsWindow();
+            settingsWindow.Owner = this;
+            settingsWindow.ShowDialog();
         }
-
     }
 }
