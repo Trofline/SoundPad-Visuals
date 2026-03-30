@@ -1,14 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
+﻿using System.IO;
 using System.Runtime.InteropServices;
 using System.Text;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Interop;
-using System.Windows.Media;
 
 namespace SoundPad_Visuals
 {
@@ -54,8 +50,8 @@ namespace SoundPad_Visuals
             var source = HwndSource.FromHwnd(hwnd);
             source.AddHook(HwndHook);
 
-     
-            
+
+
             // Hotkeys registrieren: NumPad0–9
             for (int i = 0; i <= 9; i++)
             {
@@ -71,7 +67,7 @@ namespace SoundPad_Visuals
                 int page = -1;
 
                 if (id >= 100 && id <= 109) page = id - 100; // NumPad0–9
-                
+
                 if (page >= 0)
                 {
                     if (id == 100) // NumPad0
@@ -268,7 +264,7 @@ namespace SoundPad_Visuals
         {
             SaveWindowPosition();
             Settings?.Close();
-            
+
             Close();
         }
 
