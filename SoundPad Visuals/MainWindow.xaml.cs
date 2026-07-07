@@ -24,6 +24,8 @@ namespace SoundPad_Visuals
         private const uint MOD_NONE = 0x0000;
         private const int WM_HOTKEY = 0x0312;
 
+        private bool unload = true;
+
         private readonly string WindowSettingsFile = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData),
             "SoundOverlay", "window_pos.txt");
         private string hotkeyFile = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "SoundOverlay", "hotkeys.txt");
@@ -54,8 +56,6 @@ namespace SoundPad_Visuals
             var source = HwndSource.FromHwnd(hwnd);
             source.AddHook(HwndHook);
 
-     
-            
             // Hotkeys registrieren: NumPad0–9
             for (int i = 0; i <= 9; i++)
             {
@@ -68,19 +68,46 @@ namespace SoundPad_Visuals
             if (msg == WM_HOTKEY)
             {
                 int id = wParam.ToInt32();
+
+                // F9 (ID 999) gedrückt: Fenster wieder anzeigen
+                if (id == 999)
+                {
+                    UnregisterHotKey(hwnd, 999); // F9 wieder unregistrieren
+
+                    // Normale NumPad-Hotkeys wiederherstellen
+                    for (int i = 0; i <= 9; i++)
+                    {
+                        RegisterHotKey(hwnd, 100 + i, MOD_NONE, (uint)(0x60 + i));
+                    }
+
+                    registerAll();
+
+                    OverlayVisible = true;
+                    this.Visibility = Visibility.Visible;
+
+                    handled = true;
+                    return IntPtr.Zero;
+                }
+
                 int page = -1;
 
                 if (id >= 100 && id <= 109) page = id - 100; // NumPad0–9
-                
+
                 if (page >= 0)
                 {
                     if (id == 100) // NumPad0
                     {
-                        OverlayVisible = !OverlayVisible;
-                        this.Visibility = OverlayVisible ? Visibility.Visible : Visibility.Hidden;
+                        unregisterAll();
+
+                        // F9 Hotkey registrieren (VK_F9 = 0x78)
+                        RegisterHotKey(hwnd, 999, MOD_NONE, 0x78);
+
+                        OverlayVisible = false;
+                        this.Visibility = Visibility.Hidden;
                     }
                     else
                     {
+                        registerAll();
                         LoadPage(page);
                     }
 
@@ -88,6 +115,25 @@ namespace SoundPad_Visuals
                 }
             }
             return IntPtr.Zero;
+        }
+
+        private void registerAll()
+        {
+            LoadAllHotkeys();
+        }
+
+        private void unregisterAll()
+        {
+            var helper = new WindowInteropHelper(this);
+            var hwnd = helper.Handle;
+
+            for (int i = 0; i <= 9; i++)
+            {
+                UnregisterHotKey(hwnd, i);
+                UnregisterHotKey(hwnd, 100 + i);
+            }
+
+            SaveAllHotkeys();
         }
 
         protected override void OnClosing(System.ComponentModel.CancelEventArgs e)
@@ -100,6 +146,9 @@ namespace SoundPad_Visuals
                 UnregisterHotKey(hwnd, i);
                 UnregisterHotKey(hwnd, 100 + i);
             }
+
+            // F9 sicherheitshalber ebenfalls unregistrieren, falls im versteckten Zustand geschlossen wird
+            UnregisterHotKey(hwnd, 999);
 
             // Alle Hotkeys speichern
             SaveAllHotkeys();
@@ -140,10 +189,14 @@ namespace SoundPad_Visuals
 
             if (!File.Exists(filePath))
             {
-                MessageBox.Show("Keine Soundliste gefunden. Bitte zuerst im Settings-Fenster scannen.", "Info", MessageBoxButton.OK, MessageBoxImage.Information);
+                // Verhindert störende Popups beim unsichtbaren Laden
+                if (Settings != null && Settings.IsLoaded)
+                    MessageBox.Show("Keine Soundliste gefunden. Bitte zuerst im Settings-Fenster scannen.", "Info", MessageBoxButton.OK, MessageBoxImage.Information);
                 return;
             }
 
+            // Sicherstellen, dass Settings existiert, um die Liste zu halten
+            if (Settings == null) Settings = new SettingsWindow();
             Settings.SoundFiles = File.ReadAllLines(filePath).ToList();
         }
 
@@ -154,10 +207,10 @@ namespace SoundPad_Visuals
 
             CurrentPage = num;
 
-            // Hotkeys der aktuellen Page laden oder Standard setzen
+            // Hotkeys der aktuellen Page laden oder fortlaufende Nummern (1-10, 11-20...) setzen
             if (!PageHotkeys.ContainsKey(num))
             {
-                string[] defaults = Enumerable.Range(1, 10).Select(i => $"F{i}").ToArray();
+                string[] defaults = Enumerable.Range(1, 10).Select(i => (((num - 1) * SoundsPerPage) + i).ToString()).ToArray();
                 PageHotkeys[num] = defaults;
             }
 
@@ -179,20 +232,26 @@ namespace SoundPad_Visuals
 
         private void ShowPage(int page)
         {
-            var sounds = Settings.SoundFiles
+            // Fallback, falls Settings.SoundFiles null ist
+            var allSounds = Settings?.SoundFiles ?? new List<string>();
+
+            var sounds = allSounds
                 .Skip((page - 1) * SoundsPerPage)
                 .Take(SoundsPerPage)
                 .ToList();
 
             // Sound-TextBoxes setzen
             TextBox[] soundBoxes = { s1, s2, s3, s4, s5, s6, s7, s8, s9, s10 };
+
             for (int i = 0; i < sounds.Count; i++)
             {
                 soundBoxes[i].Text = sounds[i];
             }
+
+            // Leere Plätze mit fortlaufenden Nummern füllen (z.B. Sound 11, Sound 12 auf Page 2)
             for (int i = sounds.Count; i < 10; i++)
             {
-                soundBoxes[i].Text = $"Sound {i + 1}";
+                soundBoxes[i].Text = $"Sound {((page - 1) * SoundsPerPage) + i + 1}";
             }
         }
 
@@ -242,11 +301,12 @@ namespace SoundPad_Visuals
             SaveCurrentPageHotkeys(); // sicherstellen, dass die aktuelle Page gespeichert wird
 
             StringBuilder sb = new StringBuilder();
-            for (int page = 1; page <= 10; page++)
+            for (int page = 1; page <= 10; page++) // Speichert die ersten 10 Pages
             {
                 if (!PageHotkeys.ContainsKey(page))
                 {
-                    PageHotkeys[page] = Enumerable.Range(1, 10).Select(i => $"F{i}").ToArray();
+                    // Auch hier: Fortlaufende Nummern beim ersten Generieren der Datei
+                    PageHotkeys[page] = Enumerable.Range(1, 10).Select(i => (((page - 1) * SoundsPerPage) + i).ToString()).ToArray();
                 }
 
                 sb.AppendLine($"[Page{page}]");
@@ -268,7 +328,7 @@ namespace SoundPad_Visuals
         {
             SaveWindowPosition();
             Settings?.Close();
-            
+
             Close();
         }
 
@@ -301,18 +361,18 @@ namespace SoundPad_Visuals
 
         private void Settings_Click(object sender, RoutedEventArgs e)
         {
-            if (Settings == null)
+            // Erstellt jedes Mal eine frische Instanz, um den Absturz beim zweiten Öffnen zu verhindern
+            Settings = new SettingsWindow();
+            Settings.Owner = this;
+            Settings.ShowDialog();
+
+            // Wenn das Settings-Fenster geschlossen wird, laden wir zur Sicherheit
+            // die Sounds und die aktuelle Seite sofort neu, falls neue Dateien gescannt wurden!
+            LoadSounds();
+            if (CurrentPage > 0)
             {
-                Settings = new SettingsWindow();
-                Settings.Closed += (s, args) => { Settings = null; };
-                Settings.Owner = this;
-                Settings.ShowDialog();
-            }
-            else
-            {
-                Settings.ShowDialog();
+                LoadPage(CurrentPage);
             }
         }
-
     }
 }
