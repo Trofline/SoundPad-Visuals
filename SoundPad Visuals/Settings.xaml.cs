@@ -65,6 +65,7 @@ namespace SoundPad_Visuals
                      .Where(f => f.EndsWith(".wav", System.StringComparison.OrdinalIgnoreCase)
                               || f.EndsWith(".mp3", System.StringComparison.OrdinalIgnoreCase)
                               || f.EndsWith(".m4a", System.StringComparison.OrdinalIgnoreCase)
+                              || f.EndsWith(".aac", System.StringComparison.OrdinalIgnoreCase)
                               || f.EndsWith(".mp4", System.StringComparison.OrdinalIgnoreCase))
                      .Select(f => Path.GetFileNameWithoutExtension(f))
                      .ToList();
